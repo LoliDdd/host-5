@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Загруженные файлы</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .gallery img {
+            max-width: 200px;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+        .links {
+            margin-top: 30px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            font-family: monospace;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button.copy-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Загруженные изображения</h1>
+
+    <div class="gallery">
+        {% for filename in filenames %}
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Image">
+        {% endfor %}
+    </div>
+
+    <div class="links">
+        <h2>Ссылки на изображения:</h2>
+        <textarea id="linkList" readonly>{% for filename in filenames -%}
+{{ request.host_url }}static/uploads/{{ filename }}
+{% endfor %}</textarea>
+        <button class="copy-btn" onclick="copyLinks()">Скопировать ссылки</button>
+    </div>
+
+    <script>
+        function copyLinks() {
+            const textarea = document.getElementById("linkList");
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // Для мобильных устройств
+            document.execCommand("copy");
+
+            // Визуальное подтверждение
+            const btn = document.querySelector(".copy-btn");
+            const originalText = btn.innerText;
+            btn.innerText = "Скопировано!";
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

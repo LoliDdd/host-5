@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <title>Загрузить изображения</title>
+</head>
+<body>
+  <h1>Фотохостинг</h1>
+  <form method="post" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="images" multiple required><br><br>
+    <label for="delete_after">Удалить файлы через:</label>
+    <select name="delete_after" id="delete_after">
+      <option value="0">Никогда</option>
+      <option value="1">1 месяц</option>
+      <option value="3">3 месяца</option>
+      <option value="6">6 месяцев</option>
+      <option value="12">12 месяцев</option>
+    </select><br><br>
+    <button type="submit">Загрузить</button>
+  </form>
+</body>
+</html>
